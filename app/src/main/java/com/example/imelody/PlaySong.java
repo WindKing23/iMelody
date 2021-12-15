@@ -1,17 +1,21 @@
 package com.example.imelody;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.io.File;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class PlaySong extends AppCompatActivity {
@@ -33,6 +37,7 @@ public class PlaySong extends AppCompatActivity {
     SeekBar seekBar;
     Thread updateSeek;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +63,10 @@ public class PlaySong extends AppCompatActivity {
         mediaPlayer = MediaPlayer.create(this, uri);
         mediaPlayer.start();
         seekBar.setMax(mediaPlayer.getDuration());
+
+        int milliseconds = mediaPlayer.getDuration();
+        DateTimeFormatter dateTimeFormatter= DateTimeFormatter.ofPattern("mm:ss");
+
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
